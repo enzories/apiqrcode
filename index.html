@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gerador de QR Code com Registro de Logs</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+        }
+
+        article {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .input-field {
+            margin-bottom: 20px;
+        }
+
+        .input-field label {
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .input-field input, 
+        .input-field select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #qrCode img {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 300px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        #logModal {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 600px;
+            z-index: 1000;
+        }
+
+        #logModal h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-align: center;
+            color: #333;
+        }
+
+        #logsList {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        #logsList p {
+            font-size: 1em;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        #logsList button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        #logsList button:hover {
+            background-color: #c0392b;
+        }
+
+        #logModal button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #logModal button:hover {
+            background-color: #2980b9;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gerador de QR Code</h1>
+    </header>
+
+    <article>
+        <div class="input-field">
+            <label for="textInput">Digite o texto ou URL para o QR Code</label>
+            <input type="text" id="textInput" placeholder="Digite o texto ou URL para o QR Code">
+        </div>
+
+        <div class="input-field">
+            <label for="sizeSelect">Escolha o tamanho do QR Code</label>
+            <select id="sizeSelect">
+                <option value="150x150">150x150</option>
+                <option value="200x200">200x200</option>
+                <option value="250x250">250x250</option>
+                <option value="300x300">300x300</option>
+            </select>
+        </div>
+
+        <button id="generateBtn">Gerar QR Code</button>
+        <div id="qrCode"></div>
+
+        <button id="showLogsBtn">Exibir Logs</button>
+    </article>
+
+    <footer>
+        <p>Enzo Avilla Ries - Desenvolvimento Web</p>
+    </footer>
+
+    <div id="logModal">
+        <h2>Logs Registrados</h2>
+        <div id="logsList"></div>
+        <button onclick="closeLogModal()">Fechar</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
